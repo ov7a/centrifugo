@@ -11,7 +11,7 @@ require (
 	github.com/FZambia/viper-lite v0.0.0-20220110144934-1899f66c7d0e
 	github.com/centrifugal/centrifuge v0.24.1-0.20220720055803-b368c0a61024
 	github.com/centrifugal/protocol v0.8.10
-	github.com/cristalhq/jwt/v4 v4.0.0
+	github.com/cristalhq/jwt/v4 v4.0.2
 	github.com/gobwas/glob v0.2.3
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/securecookie v1.1.1
@@ -19,17 +19,18 @@ require (
 	github.com/lucas-clemente/quic-go v0.28.0
 	github.com/marten-seemann/webtransport-go v0.0.0-20220709212913-0bb1f0a11a30
 	github.com/mattn/go-isatty v0.0.12
-	github.com/mitchellh/mapstructure v1.4.3
+	github.com/mitchellh/mapstructure v1.5.0
 	github.com/nats-io/nats.go v1.16.0
-	github.com/prometheus/client_golang v1.12.1
+	github.com/prometheus/client_golang v1.12.2
 	github.com/rakutentech/jwk-go v1.0.1
 	github.com/rs/zerolog v1.21.0
 	github.com/spf13/cobra v0.0.7
 	github.com/stretchr/testify v1.8.0
 	github.com/vmihailenco/msgpack/v5 v5.3.5
+	go.uber.org/automaxprocs v1.5.1
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	google.golang.org/grpc v1.46.0
+	google.golang.org/grpc v1.48.0
 	google.golang.org/protobuf v1.28.0
 )
 
