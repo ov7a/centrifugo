@@ -154,12 +154,17 @@ func (h *PublishHandler) Handle(node *centrifuge.Node) PublishHandlerFunc {
 				historyTTL = 0
 			}
 		}
-
+	    node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelTrace, "starting to publish via proxy", map[string]interface{}{"channel": e.Channel}))
 		result, err := node.Publish(
 			e.Channel, data,
 			centrifuge.WithClientInfo(e.ClientInfo),
 			centrifuge.WithHistory(historySize, time.Duration(historyTTL)),
 		)
+		if err != nil {
+			node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelError, "error publishing message in engine via proxy", map[string]interface{}{"error": err.Error(), "channel": e.Channel}))
+		} else {
+			node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelTrace, "published via proxy", map[string]interface{}{"channel": e.Channel, "result": result}))
+		}
 		return centrifuge.PublishReply{Result: &result}, err
 	}
 }

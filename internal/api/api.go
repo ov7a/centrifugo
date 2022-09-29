@@ -95,7 +95,7 @@ func (h *Executor) Publish(_ context.Context, cmd *PublishRequest) *PublishRespo
 		historySize = 0
 		historyTTL = 0
 	}
-
+	h.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelTrace, "starting to publish", map[string]interface{}{"channel": cmd.Channel}))
 	result, err := h.node.Publish(
 		cmd.Channel, cmd.Data,
 		centrifuge.WithHistory(historySize, time.Duration(historyTTL)),
@@ -105,6 +105,8 @@ func (h *Executor) Publish(_ context.Context, cmd *PublishRequest) *PublishRespo
 		h.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelError, "error publishing message in engine", map[string]interface{}{"error": err.Error(), "channel": cmd.Channel}))
 		resp.Error = ErrorInternal
 		return resp
+	} else {
+		h.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelTrace, "published", map[string]interface{}{"channel": cmd.Channel, "result": result}))
 	}
 	resp.Result = &PublishResult{
 		Offset: result.StreamPosition.Offset,

@@ -113,10 +113,13 @@ func (s *Handler) handleAPICommand(ctx context.Context, cmd *Command) (*Reply, e
 			rep.Error = ErrorBadRequest
 			return rep, nil
 		}
+		s.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelTrace, "start publish(api)", map[string]interface{}{"params": cmd}))
 		resp := s.api.Publish(ctx, cmd)
 		if resp.Error != nil {
 			rep.Error = resp.Error
+			s.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelError, "error during publish(api)", map[string]interface{}{"error":  resp.Error}))
 		} else {
+			s.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelTrace, "done publish(api)", map[string]interface{}{"result":  resp.Result}))
 			if resp.Result != nil {
 				replyRes, err = encoder.EncodePublish(resp.Result)
 				if err != nil {

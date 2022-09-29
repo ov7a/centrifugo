@@ -540,7 +540,7 @@ func (h *Handler) OnPublish(c *centrifuge.Client, e centrifuge.PublishEvent, pub
 		}
 		return publishProxyHandler(c, e, chOpts)
 	}
-
+	h.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelTrace, "starting publish (client)", map[string]interface{}{"channel": e.Channel, "user": c.UserID(), "client": c.ID()}))
 	result, err := h.node.Publish(
 		e.Channel, e.Data,
 		centrifuge.WithClientInfo(e.ClientInfo),
@@ -548,6 +548,8 @@ func (h *Handler) OnPublish(c *centrifuge.Client, e centrifuge.PublishEvent, pub
 	)
 	if err != nil {
 		h.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelError, "publish error", map[string]interface{}{"channel": e.Channel, "user": c.UserID(), "client": c.ID(), "error": err.Error()}))
+	} else {
+		h.node.Log(centrifuge.NewLogEntry(centrifuge.LogLevelTrace, "published", map[string]interface{}{"channel": e.Channel, "user": c.UserID(), "client": c.ID()}))
 	}
 	return centrifuge.PublishReply{Result: &result}, err
 }
